@@ -48,4 +48,15 @@ describe("screening filters", () => {
     const result = applyScreeningFilters(screenings, { date: "2026-04-19", theaterIds: ["wald9"] });
     expect(result).toHaveLength(0);
   });
+
+  it("applies start time filtering", () => {
+    const result = applyScreeningFilters(screenings, { date: "2026-04-18", startTime: "09:30" });
+    expect(result).toHaveLength(0);
+  });
+
+  it("applies end time filtering", () => {
+    const result = applyScreeningFilters(screenings, { date: "2026-04-18", endTime: "11:30" });
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe("1");
+  });
 });

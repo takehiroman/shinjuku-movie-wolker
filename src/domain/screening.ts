@@ -1,5 +1,5 @@
 import type { Screening, ScreeningFilters } from "./types";
-import { toTimestamp } from "../lib/date";
+import { extractTimeString, toTimestamp } from "../lib/date";
 
 export function normalizeTags(tags: string[] | undefined): string[] {
   return [...new Set((tags ?? []).map((tag) => tag.trim()).filter(Boolean))];
@@ -60,6 +60,14 @@ export function screeningMatchesFilters(screening: Screening, filters: Screening
         return false;
       }
     }
+  }
+
+  if (filters.startTime && extractTimeString(screening.startAt) < filters.startTime) {
+    return false;
+  }
+
+  if (filters.endTime && extractTimeString(screening.endAt) > filters.endTime) {
+    return false;
   }
 
   return true;

@@ -43,6 +43,8 @@ export async function getScreenings(env: AppEnv, filters: ScreeningFilters): Pro
       theaterIds: effectiveFilters.theaterIds,
       keyword: effectiveFilters.keyword,
       tags: effectiveFilters.tags,
+      startTime: effectiveFilters.startTime,
+      endTime: effectiveFilters.endTime,
       availableTheaters: collectAvailableTheaters(allForDate, settings.theaters),
       availableTags: collectAvailableTags(allForDate),
     },

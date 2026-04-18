@@ -29,6 +29,8 @@ export function TimelinePage() {
   const [date, setDate] = useState(searchParams.get("date") ?? todayDateString());
   const [keyword, setKeyword] = useState(searchParams.get("keyword") ?? "");
   const [tagsText, setTagsText] = useState(searchParams.get("tags") ?? "");
+  const [startTime, setStartTime] = useState(searchParams.get("startTime") ?? "");
+  const [endTime, setEndTime] = useState(searchParams.get("endTime") ?? "");
   const [selectedTheaterIds, setSelectedTheaterIds] = useState<string[]>(parseArray(searchParams.get("theaterIds")));
 
   const queryString = useMemo(() => {
@@ -40,11 +42,17 @@ export function TimelinePage() {
     if (tagsText.trim()) {
       params.set("tags", tagsText.trim());
     }
+    if (startTime) {
+      params.set("startTime", startTime);
+    }
+    if (endTime) {
+      params.set("endTime", endTime);
+    }
     if (selectedTheaterIds.length) {
       params.set("theaterIds", selectedTheaterIds.join(","));
     }
     return params.toString();
-  }, [date, keyword, selectedTheaterIds, tagsText]);
+  }, [date, endTime, keyword, selectedTheaterIds, startTime, tagsText]);
 
   useEffect(() => {
     setSearchParams(new URLSearchParams(queryString), { replace: true });
@@ -110,11 +118,15 @@ export function TimelinePage() {
         date={date}
         keyword={keyword}
         tagsText={tagsText}
+        startTime={startTime}
+        endTime={endTime}
         theaters={theaters}
         selectedTheaterIds={selectedTheaterIds}
         onDateChange={setDate}
         onKeywordChange={setKeyword}
         onTagsTextChange={setTagsText}
+        onStartTimeChange={setStartTime}
+        onEndTimeChange={setEndTime}
         onTheaterToggle={toggleTheater}
         onApply={() => setSearchParams(new URLSearchParams(queryString))}
       />

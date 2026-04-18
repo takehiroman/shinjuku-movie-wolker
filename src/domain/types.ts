@@ -54,6 +54,8 @@ export interface ScreeningFilters {
   theaterIds?: string[];
   keyword?: string;
   tags?: string[];
+  startTime?: string;
+  endTime?: string;
 }
 
 export interface ItineraryFilters extends ScreeningFilters {
@@ -97,6 +99,8 @@ export interface ApiMeta {
   theaterIds?: string[];
   keyword?: string;
   tags?: string[];
+  startTime?: string;
+  endTime?: string;
   bufferMinutes?: number;
   startScreeningId?: string;
   availableTheaters?: Theater[];

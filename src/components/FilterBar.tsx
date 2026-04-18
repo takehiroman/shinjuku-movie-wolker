@@ -5,11 +5,15 @@ interface FilterBarProps {
   date: string;
   keyword: string;
   tagsText: string;
+  startTime: string;
+  endTime: string;
   theaters: Theater[];
   selectedTheaterIds: string[];
   onDateChange: (value: string) => void;
   onKeywordChange: (value: string) => void;
   onTagsTextChange: (value: string) => void;
+  onStartTimeChange: (value: string) => void;
+  onEndTimeChange: (value: string) => void;
   onTheaterToggle: (theaterId: string) => void;
   onApply: () => void;
   extraContent?: ReactNode;
@@ -20,11 +24,15 @@ export function FilterBar(props: FilterBarProps) {
     date,
     keyword,
     tagsText,
+    startTime,
+    endTime,
     theaters,
     selectedTheaterIds,
     onDateChange,
     onKeywordChange,
     onTagsTextChange,
+    onStartTimeChange,
+    onEndTimeChange,
     onTheaterToggle,
     onApply,
     extraContent,
@@ -54,6 +62,14 @@ export function FilterBar(props: FilterBarProps) {
             placeholder="subtitle,dolby"
             onChange={(event) => onTagsTextChange(event.target.value)}
           />
+        </label>
+        <label className="field">
+          <span>開始時刻以降</span>
+          <input type="time" value={startTime} onChange={(event) => onStartTimeChange(event.target.value)} />
+        </label>
+        <label className="field">
+          <span>終了時刻以前</span>
+          <input type="time" value={endTime} onChange={(event) => onEndTimeChange(event.target.value)} />
         </label>
         {extraContent}
       </div>

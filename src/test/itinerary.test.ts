@@ -102,4 +102,23 @@ describe("itinerary generation", () => {
 
     expect(itineraries.every((item) => item.firstScreening.id === "b")).toBe(true);
   });
+
+  it("excludes itineraries with the same movie title", () => {
+    const map = buildTravelTimeMap([]);
+    const sameTitleScreenings: Screening[] = [
+      sampleScreenings[0],
+      {
+        ...sampleScreenings[1],
+        id: "same-title-second",
+        movieId: "m9",
+        movieTitle: "映画A",
+        startAt: "2026-04-18T11:20:00+09:00",
+        endAt: "2026-04-18T13:00:00+09:00",
+      },
+    ];
+
+    const itineraries = buildItinerariesFromScreenings(sameTitleScreenings, map, 15);
+
+    expect(itineraries).toHaveLength(0);
+  });
 });

@@ -30,6 +30,8 @@ export function ItinerariesPage() {
   const [date, setDate] = useState(searchParams.get("date") ?? todayDateString());
   const [keyword, setKeyword] = useState(searchParams.get("keyword") ?? "");
   const [tagsText, setTagsText] = useState(searchParams.get("tags") ?? "");
+  const [startTime, setStartTime] = useState(searchParams.get("startTime") ?? "");
+  const [endTime, setEndTime] = useState(searchParams.get("endTime") ?? "");
   const [selectedTheaterIds, setSelectedTheaterIds] = useState<string[]>(parseArray(searchParams.get("theaterIds")));
   const [bufferMinutes, setBufferMinutes] = useState<number>(Number(searchParams.get("bufferMinutes") ?? 20));
 
@@ -71,6 +73,12 @@ export function ItinerariesPage() {
     if (tagsText.trim()) {
       params.set("tags", tagsText.trim());
     }
+    if (startTime) {
+      params.set("startTime", startTime);
+    }
+    if (endTime) {
+      params.set("endTime", endTime);
+    }
     if (selectedTheaterIds.length) {
       params.set("theaterIds", selectedTheaterIds.join(","));
     }
@@ -78,7 +86,7 @@ export function ItinerariesPage() {
       params.set("startScreeningId", startScreeningId);
     }
     return params.toString();
-  }, [bufferMinutes, date, keyword, selectedTheaterIds, startScreeningId, tagsText]);
+  }, [bufferMinutes, date, endTime, keyword, selectedTheaterIds, startScreeningId, startTime, tagsText]);
 
   useEffect(() => {
     setSearchParams(new URLSearchParams(queryString), { replace: true });
@@ -143,11 +151,15 @@ export function ItinerariesPage() {
         date={date}
         keyword={keyword}
         tagsText={tagsText}
+        startTime={startTime}
+        endTime={endTime}
         theaters={theaters}
         selectedTheaterIds={selectedTheaterIds}
         onDateChange={setDate}
         onKeywordChange={setKeyword}
         onTagsTextChange={setTagsText}
+        onStartTimeChange={setStartTime}
+        onEndTimeChange={setEndTime}
         onTheaterToggle={toggleTheater}
         onApply={() => setSearchParams(new URLSearchParams(queryString))}
         extraContent={

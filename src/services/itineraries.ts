@@ -6,6 +6,7 @@ import {
   canChainScreenings,
   compareItineraries,
   getTravelMinutes,
+  hasSameMovieTitle,
 } from "../domain/itinerary";
 import { itinerariesCacheKey } from "../cache/keys";
 import { getCachedJson, setCachedJson } from "./cache";
@@ -33,6 +34,10 @@ export function buildItinerariesFromScreenings(
 
     for (let secondIndex = firstIndex + 1; secondIndex < screenings.length; secondIndex += 1) {
       const second = screenings[secondIndex];
+      if (hasSameMovieTitle(first, second)) {
+        continue;
+      }
+
       const travelMinutes = getTravelMinutes(first, second, travelTimes);
 
       if (!canChainScreenings(first, second, travelMinutes, bufferMinutes)) {

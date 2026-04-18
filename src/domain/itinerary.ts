@@ -36,6 +36,10 @@ export function canChainScreenings(
   return firstEnd + (travelMinutes + bufferMinutes) * 60000 <= secondStart;
 }
 
+export function hasSameMovieTitle(first: Screening, second: Screening): boolean {
+  return first.movieTitle.trim().toLocaleLowerCase() === second.movieTitle.trim().toLocaleLowerCase();
+}
+
 export function buildItinerary(
   first: Screening,
   second: Screening,

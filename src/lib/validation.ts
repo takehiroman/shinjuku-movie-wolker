@@ -7,7 +7,7 @@ import type {
   TravelTime,
 } from "../domain/types";
 import { MAX_BUFFER_MINUTES, MIN_BUFFER_MINUTES } from "./constants";
-import { isValidDateString } from "./date";
+import { isValidDateString, isValidTimeString } from "./date";
 
 export class ValidationError extends Error {
   status: number;
@@ -74,6 +74,12 @@ function assertDate(value: string, label: string): void {
   }
 }
 
+function assertTime(value: string, label: string): void {
+  if (!isValidTimeString(value)) {
+    throw new ValidationError(`${label} must be HH:mm`);
+  }
+}
+
 export function parseScreeningFilters(searchParams: URLSearchParams): ScreeningFilters {
   const date = searchParams.get("date");
   if (!date) {
@@ -84,12 +90,28 @@ export function parseScreeningFilters(searchParams: URLSearchParams): ScreeningF
   const keyword = asOptionalString(searchParams.get("keyword"));
   const theaterIds = parseDelimitedList(searchParams.get("theaterIds"));
   const tags = parseDelimitedList(searchParams.get("tags"));
+  const startTime = asOptionalString(searchParams.get("startTime"));
+  const endTime = asOptionalString(searchParams.get("endTime"));
+
+  if (startTime) {
+    assertTime(startTime, "startTime");
+  }
+
+  if (endTime) {
+    assertTime(endTime, "endTime");
+  }
+
+  if (startTime && endTime && startTime > endTime) {
+    throw new ValidationError("startTime must be earlier than or equal to endTime");
+  }
 
   return {
     date,
     keyword,
     theaterIds,
     tags,
+    startTime,
+    endTime,
   };
 }
 
