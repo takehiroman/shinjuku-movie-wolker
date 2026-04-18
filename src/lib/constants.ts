@@ -1,0 +1,9 @@
+export const APP_NAME = "Shinjuku Movie Wolker";
+export const DEFAULT_SETTINGS_ID = "default";
+export const DEFAULT_BUFFER_MINUTES = 20;
+export const CACHE_TTL_SECONDS = 60 * 5;
+export const SETTINGS_CACHE_TTL_SECONDS = 60 * 30;
+export const DEFAULT_UNKNOWN_TRAVEL_MINUTES = 9999;
+export const MAX_BUFFER_MINUTES = 180;
+export const MIN_BUFFER_MINUTES = 0;
+export const DEFAULT_AREA = "shinjuku";
