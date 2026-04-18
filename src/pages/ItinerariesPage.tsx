@@ -33,13 +33,14 @@ export function ItinerariesPage() {
   const [selectedTheaterIds, setSelectedTheaterIds] = useState<string[]>(parseArray(searchParams.get("theaterIds")));
   const [bufferMinutes, setBufferMinutes] = useState<number>(Number(searchParams.get("bufferMinutes") ?? 20));
 
+  const hasBufferMinutesParam = searchParams.has("bufferMinutes");
   const startScreeningId = searchParams.get("startScreeningId") ?? "";
 
   useEffect(() => {
     let cancelled = false;
 
     async function loadSettings(): Promise<void> {
-      if (searchParams.get("bufferMinutes")) {
+      if (hasBufferMinutesParam) {
         setSettingsLoaded(true);
         return;
       }
@@ -58,7 +59,7 @@ export function ItinerariesPage() {
     return () => {
       cancelled = true;
     };
-  }, [searchParams]);
+  }, [hasBufferMinutesParam]);
 
   const queryString = useMemo(() => {
     const params = new URLSearchParams();
@@ -80,6 +81,10 @@ export function ItinerariesPage() {
   }, [bufferMinutes, date, keyword, selectedTheaterIds, startScreeningId, tagsText]);
 
   useEffect(() => {
+    setSearchParams(new URLSearchParams(queryString), { replace: true });
+  }, [queryString, setSearchParams]);
+
+  useEffect(() => {
     if (!settingsLoaded) {
       return;
     }
@@ -98,7 +103,7 @@ export function ItinerariesPage() {
 
         if (!cancelled) {
           setItineraries(data.itineraries);
-          setTheaters(data.meta.availableTheaters ?? theaters);
+          setTheaters(data.meta.availableTheaters ?? []);
         }
       } catch (cause) {
         if (!cancelled) {
@@ -111,13 +116,12 @@ export function ItinerariesPage() {
       }
     }
 
-    setSearchParams(new URLSearchParams(queryString), { replace: true });
     void run();
 
     return () => {
       cancelled = true;
     };
-  }, [queryString, setSearchParams, settingsLoaded, theaters]);
+  }, [queryString, settingsLoaded]);
 
   function toggleTheater(theaterId: string): void {
     setSelectedTheaterIds((current) =>
@@ -160,9 +164,9 @@ export function ItinerariesPage() {
         }
       />
 
-      {loading ? <LoadingState /> : null}
+      {loading && itineraries.length === 0 ? <LoadingState /> : null}
       {error ? <ErrorState message={error} /> : null}
-      {!loading && !error ? <ItineraryList itineraries={itineraries} /> : null}
+      {!error && (!loading || itineraries.length > 0) ? <ItineraryList itineraries={itineraries} /> : null}
     </div>
   );
 }
