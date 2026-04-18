@@ -4,6 +4,7 @@ export interface AppEnv {
   ASSETS?: Fetcher;
   APP_ENV?: string;
   DEFAULT_BUFFER_MINUTES?: string;
+  ADMIN_SYNC_TOKEN?: string;
 }
 
 export async function all<T>(db: D1Database, sql: string, bindings: unknown[] = []): Promise<T[]> {

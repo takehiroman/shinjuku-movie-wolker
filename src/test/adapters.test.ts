@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { normalizePiccadillyHtml } from "../adapters/piccadillyAdapter";
+import { normalizeTohoSchedule } from "../adapters/tohoShinjukuAdapter";
 import { normalizeWald9Html } from "../adapters/wald9Adapter";
 
 describe("scraping adapters", () => {
@@ -91,5 +92,82 @@ describe("scraping adapters", () => {
     expect(payload.screenings[0]?.tags).toEqual(["subtitle", "accessible"]);
     expect(payload.screenings[1]?.startAt).toBe("2026-04-18T21:40:00+09:00");
     expect(payload.screenings[1]?.endAt).toBe("2026-04-18T23:55:00+09:00");
+  });
+
+  it("normalizes TOHO Shinjuku schedule API responses", () => {
+    const payload = normalizeTohoSchedule(
+      {
+        status: "0",
+        data: [
+          {
+            list: [
+              {
+                name: "ＴＯＨＯシネマズ新宿",
+                list: [
+                  {
+                    name: "名探偵コナン　ハイウェイの堕天使（ＩＭＡＸレーザー）",
+                    ratingCd: "01",
+                    hours: 109,
+                    list: [
+                      {
+                        ename: "SCREEN10",
+                        name: "スクリーン１０",
+                        iconNm1: "",
+                        iconNm2: "IMAXレーザー",
+                        iconNm3: "",
+                        facilities: [],
+                        list: [
+                          {
+                            code: 1,
+                            showingStart: "9:00",
+                            showingEnd: "11:10",
+                            eventIcon: "",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    name: "私がビーバーになる時（吹替版）",
+                    ratingCd: "",
+                    hours: 104,
+                    list: [
+                      {
+                        ename: "SCREEN11",
+                        name: "スクリーン１１",
+                        iconNm1: "",
+                        iconNm2: "",
+                        iconNm3: "",
+                        facilities: [],
+                        list: [
+                          {
+                            code: 7,
+                            showingStart: "21:35",
+                            showingEnd: "23:35",
+                            eventIcon: "/schedule/schedule_ico02-4.gif",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      "2026-04-18",
+    );
+
+    expect(payload.theaters[0].id).toBe("toho-shinjuku");
+    expect(payload.screenings).toHaveLength(2);
+    expect(payload.movies.map((movie) => movie.title)).toEqual([
+      "名探偵コナン ハイウェイの堕天使",
+      "私がビーバーになる時",
+    ]);
+    expect(payload.screenings[0]?.tags).toEqual(["imax-laser", "pg12", "imax"]);
+    expect(payload.screenings[1]?.tags).toEqual(["dub", "midnight"]);
+    expect(payload.screenings[1]?.startAt).toBe("2026-04-18T21:35:00+09:00");
+    expect(payload.screenings[1]?.endAt).toBe("2026-04-18T23:35:00+09:00");
   });
 });

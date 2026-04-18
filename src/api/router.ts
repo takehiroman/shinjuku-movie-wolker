@@ -5,6 +5,7 @@ import { getItinerariesHandler } from "./handlers/getItineraries";
 import { getSettingsHandler } from "./handlers/getSettings";
 import { putSettingsHandler } from "./handlers/putSettings";
 import { postImportScreeningsHandler } from "./handlers/postImportScreenings";
+import { postRunSyncHandler } from "./handlers/postRunSync";
 
 type RouteHandler = (request: Request, env: AppEnv, ctx: ExecutionContext) => Promise<Response>;
 
@@ -14,6 +15,7 @@ const routes = new Map<string, RouteHandler>([
   ["GET /api/settings", getSettingsHandler],
   ["PUT /api/settings", putSettingsHandler],
   ["POST /api/admin/import-screenings", postImportScreeningsHandler],
+  ["POST /api/admin/run-sync", postRunSyncHandler],
 ]);
 
 export function jsonResponse(payload: unknown, init: ResponseInit = {}): Response {
