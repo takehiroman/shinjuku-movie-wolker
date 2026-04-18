@@ -56,6 +56,24 @@ export async function deleteScreeningsByDates(db: D1Database, targetDates: strin
   );
 }
 
+export async function deleteScreeningsByTheatersAndDates(
+  db: D1Database,
+  theaterIds: string[],
+  targetDates: string[],
+): Promise<void> {
+  if (!theaterIds.length || !targetDates.length) {
+    return;
+  }
+
+  await db.batch(
+    theaterIds.flatMap((theaterId) =>
+      targetDates.map((targetDate) =>
+        db.prepare(`DELETE FROM screenings WHERE theater_id = ? AND target_date = ?`).bind(theaterId, targetDate),
+      ),
+    ),
+  );
+}
+
 export async function upsertScreenings(
   db: D1Database,
   screenings: Array<{
