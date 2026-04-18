@@ -117,6 +117,8 @@ wrangler deploy
 }
 ```
 
+実運用寄りのデモデータは [sample-data/shinjuku-demo-2026-04-18.json](/Users/takehirotsuzaki/shinjuku-movie-wolker/sample-data/shinjuku-demo-2026-04-18.json) に置いてあります。
+
 ## 主要API
 
 - `GET /api/screenings?date=2026-04-18&theaterIds=wald9,toho&keyword=映画A&tags=subtitle`
