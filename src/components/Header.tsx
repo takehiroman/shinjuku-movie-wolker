@@ -5,7 +5,6 @@ const links = [
   { to: "/", label: "Timeline" },
   { to: "/itineraries", label: "Itineraries" },
   { to: "/settings", label: "Settings" },
-  { to: "/admin/import", label: "Import" },
 ];
 
 export function Header() {
