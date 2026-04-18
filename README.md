@@ -38,7 +38,7 @@ npm run d1:migrate:remote
 
 ```bash
 wrangler d1 migrations apply shinjuku-movie-wolker --local
-wrangler d1 migrations apply shinjuku-movie-wolker
+wrangler d1 migrations apply shinjuku-movie-wolker --remote
 ```
 
 ## KV の作成方法

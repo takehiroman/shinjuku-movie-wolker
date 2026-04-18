@@ -6,15 +6,15 @@
   "kv_namespaces": [
     {
       "binding": "CACHE",
-      "id": "REPLACE_WITH_KV_NAMESPACE_ID",
-      "preview_id": "REPLACE_WITH_KV_PREVIEW_ID"
+      "id": "ecefe54116a04a83befec5a211bb7fa5",
+      "preview_id": "9192366384124469bd248b53f9185824"
     }
   ],
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "shinjuku-movie-wolker",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+      "database_id": "208d3e7b-b322-42cb-8865-5b19357adc69"
     }
   ],
   "assets": {

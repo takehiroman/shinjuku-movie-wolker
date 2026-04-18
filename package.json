@@ -14,7 +14,7 @@
     "cf:check": "wrangler check",
     "cf:types": "wrangler types ./src/worker-configuration.d.ts",
     "d1:migrate:local": "wrangler d1 migrations apply shinjuku-movie-wolker --local",
-    "d1:migrate:remote": "wrangler d1 migrations apply shinjuku-movie-wolker"
+    "d1:migrate:remote": "wrangler d1 migrations apply shinjuku-movie-wolker --remote"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -22,7 +22,6 @@
     "react-router-dom": "^7.6.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260410.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
