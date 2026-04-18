@@ -63,14 +63,16 @@ export function FilterBar(props: FilterBarProps) {
             onChange={(event) => onTagsTextChange(event.target.value)}
           />
         </label>
-        <label className="field">
-          <span>開始時刻以降</span>
-          <input type="time" value={startTime} onChange={(event) => onStartTimeChange(event.target.value)} />
-        </label>
-        <label className="field">
-          <span>終了時刻以前</span>
-          <input type="time" value={endTime} onChange={(event) => onEndTimeChange(event.target.value)} />
-        </label>
+        <div className="time-filter-stack">
+          <label className="field">
+            <span>開始時刻以降</span>
+            <input type="time" value={startTime} onChange={(event) => onStartTimeChange(event.target.value)} />
+          </label>
+          <label className="field">
+            <span>終了時刻以前</span>
+            <input type="time" value={endTime} onChange={(event) => onEndTimeChange(event.target.value)} />
+          </label>
+        </div>
         {extraContent}
       </div>
       <div className="field">

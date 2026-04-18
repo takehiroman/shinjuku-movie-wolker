@@ -147,6 +147,12 @@ button {
   flex: 1 1 220px;
 }
 
+.time-filter-stack {
+  display: grid;
+  gap: 0.75rem;
+  flex: 1 1 220px;
+}
+
 .card {
   padding: 1rem;
 }
