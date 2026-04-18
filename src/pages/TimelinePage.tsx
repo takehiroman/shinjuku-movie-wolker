@@ -103,6 +103,8 @@ export function TimelinePage() {
 
   function handleScreeningSelect(screening: Screening): void {
     const params = new URLSearchParams(queryString);
+    params.delete("startTime");
+    params.delete("endTime");
     params.set("startScreeningId", screening.id);
     navigate(`/itineraries?${params.toString()}`);
   }
