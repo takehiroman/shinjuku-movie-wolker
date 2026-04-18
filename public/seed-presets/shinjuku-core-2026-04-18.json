@@ -1,0 +1,135 @@
+{
+  "theaters": [
+    {
+      "id": "piccadilly",
+      "name": "新宿ピカデリー",
+      "area": "shinjuku"
+    },
+    {
+      "id": "toho-shinjuku",
+      "name": "TOHOシネマズ新宿",
+      "area": "shinjuku"
+    },
+    {
+      "id": "wald9",
+      "name": "新宿バルト9",
+      "area": "shinjuku"
+    }
+  ],
+  "movies": [
+    {
+      "id": "demo-movie-1",
+      "title": "新宿横断メモリーズ"
+    },
+    {
+      "id": "demo-movie-2",
+      "title": "雨上がりのシネマ通り"
+    },
+    {
+      "id": "demo-movie-3",
+      "title": "ミッドナイト・カブキチョウ"
+    },
+    {
+      "id": "demo-movie-6",
+      "title": "スクリーン越しの東京"
+    }
+  ],
+  "screenings": [
+    {
+      "id": "core-scr-wald9-1",
+      "theaterId": "wald9",
+      "movieId": "demo-movie-1",
+      "screenName": "SCREEN1",
+      "startAt": "2026-04-18T09:05:00+09:00",
+      "endAt": "2026-04-18T11:10:00+09:00",
+      "durationMinutes": 125,
+      "tags": [
+        "subtitle"
+      ],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "core-scr-toho-1",
+      "theaterId": "toho-shinjuku",
+      "movieId": "demo-movie-2",
+      "screenName": "SCREEN6",
+      "startAt": "2026-04-18T11:45:00+09:00",
+      "endAt": "2026-04-18T13:35:00+09:00",
+      "durationMinutes": 110,
+      "tags": [
+        "imax"
+      ],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "core-scr-piccadilly-1",
+      "theaterId": "piccadilly",
+      "movieId": "demo-movie-3",
+      "screenName": "SCREEN2",
+      "startAt": "2026-04-18T12:00:00+09:00",
+      "endAt": "2026-04-18T13:55:00+09:00",
+      "durationMinutes": 115,
+      "tags": [
+        "dolby"
+      ],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "core-scr-wald9-2",
+      "theaterId": "wald9",
+      "movieId": "demo-movie-6",
+      "screenName": "SCREEN5",
+      "startAt": "2026-04-18T16:30:00+09:00",
+      "endAt": "2026-04-18T18:30:00+09:00",
+      "durationMinutes": 120,
+      "tags": [
+        "late"
+      ],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "core-scr-toho-2",
+      "theaterId": "toho-shinjuku",
+      "movieId": "demo-movie-3",
+      "screenName": "SCREEN3",
+      "startAt": "2026-04-18T18:45:00+09:00",
+      "endAt": "2026-04-18T20:35:00+09:00",
+      "durationMinutes": 110,
+      "tags": [
+        "dolby",
+        "subtitle"
+      ],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "core-scr-piccadilly-2",
+      "theaterId": "piccadilly",
+      "movieId": "demo-movie-2",
+      "screenName": "SCREEN3",
+      "startAt": "2026-04-18T19:10:00+09:00",
+      "endAt": "2026-04-18T21:05:00+09:00",
+      "durationMinutes": 115,
+      "tags": [
+        "subtitle"
+      ],
+      "targetDate": "2026-04-18"
+    }
+  ],
+  "travelTimes": [
+    {
+      "fromTheaterId": "piccadilly",
+      "toTheaterId": "toho-shinjuku",
+      "travelMinutes": 11
+    },
+    {
+      "fromTheaterId": "wald9",
+      "toTheaterId": "piccadilly",
+      "travelMinutes": 8
+    },
+    {
+      "fromTheaterId": "wald9",
+      "toTheaterId": "toho-shinjuku",
+      "travelMinutes": 14
+    }
+  ]
+}

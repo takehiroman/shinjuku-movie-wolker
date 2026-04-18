@@ -121,6 +121,11 @@ wrangler deploy
 
 主要館だけに絞った軽い seed は [sample-data/shinjuku-core-2026-04-18.json](/Users/takehirotsuzaki/shinjuku-movie-wolker/sample-data/shinjuku-core-2026-04-18.json) に置いてあります。
 
+管理画面からすぐ読み込める公開プリセットも配置しています。
+
+- `/seed-presets/shinjuku-core-2026-04-18.json`
+- `/seed-presets/shinjuku-demo-2026-04-18.json`
+
 映画館ごとに JSON を分けて管理したい場合は、[sample-data/sources/core-2026-04-18](/Users/takehirotsuzaki/shinjuku-movie-wolker/sample-data/sources/core-2026-04-18) 配下の `theaters/*.json` と `travel-times.json` を編集し、次を実行してください。
 
 ```bash

@@ -1,0 +1,159 @@
+{
+  "theaters": [
+    { "id": "wald9", "name": "新宿バルト9", "area": "shinjuku" },
+    { "id": "toho-shinjuku", "name": "TOHOシネマズ新宿", "area": "shinjuku" },
+    { "id": "piccadilly", "name": "新宿ピカデリー", "area": "shinjuku" },
+    { "id": "ks-cinema", "name": "ケイズシネマ", "area": "shinjuku" },
+    { "id": "109-premium", "name": "109シネマズプレミアム新宿", "area": "shinjuku" }
+  ],
+  "movies": [
+    { "id": "demo-movie-1", "title": "新宿横断メモリーズ" },
+    { "id": "demo-movie-2", "title": "雨上がりのシネマ通り" },
+    { "id": "demo-movie-3", "title": "ミッドナイト・カブキチョウ" },
+    { "id": "demo-movie-4", "title": "フィルムと珈琲" },
+    { "id": "demo-movie-5", "title": "ネオンのあとで" },
+    { "id": "demo-movie-6", "title": "スクリーン越しの東京" }
+  ],
+  "screenings": [
+    {
+      "id": "demo-scr-1",
+      "theaterId": "wald9",
+      "movieId": "demo-movie-1",
+      "screenName": "SCREEN1",
+      "startAt": "2026-04-18T09:05:00+09:00",
+      "endAt": "2026-04-18T11:10:00+09:00",
+      "durationMinutes": 125,
+      "tags": ["subtitle"],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "demo-scr-2",
+      "theaterId": "toho-shinjuku",
+      "movieId": "demo-movie-2",
+      "screenName": "SCREEN6",
+      "startAt": "2026-04-18T11:45:00+09:00",
+      "endAt": "2026-04-18T13:35:00+09:00",
+      "durationMinutes": 110,
+      "tags": ["imax"],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "demo-scr-3",
+      "theaterId": "piccadilly",
+      "movieId": "demo-movie-3",
+      "screenName": "SCREEN2",
+      "startAt": "2026-04-18T12:00:00+09:00",
+      "endAt": "2026-04-18T13:55:00+09:00",
+      "durationMinutes": 115,
+      "tags": ["dolby"],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "demo-scr-4",
+      "theaterId": "ks-cinema",
+      "movieId": "demo-movie-4",
+      "screenName": "SCREEN1",
+      "startAt": "2026-04-18T14:20:00+09:00",
+      "endAt": "2026-04-18T16:00:00+09:00",
+      "durationMinutes": 100,
+      "tags": ["mini-theater"],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "demo-scr-5",
+      "theaterId": "109-premium",
+      "movieId": "demo-movie-5",
+      "screenName": "THEATER7",
+      "startAt": "2026-04-18T16:25:00+09:00",
+      "endAt": "2026-04-18T18:20:00+09:00",
+      "durationMinutes": 115,
+      "tags": ["premium"],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "demo-scr-6",
+      "theaterId": "wald9",
+      "movieId": "demo-movie-6",
+      "screenName": "SCREEN5",
+      "startAt": "2026-04-18T16:30:00+09:00",
+      "endAt": "2026-04-18T18:30:00+09:00",
+      "durationMinutes": 120,
+      "tags": ["late"],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "demo-scr-7",
+      "theaterId": "toho-shinjuku",
+      "movieId": "demo-movie-3",
+      "screenName": "SCREEN3",
+      "startAt": "2026-04-18T18:45:00+09:00",
+      "endAt": "2026-04-18T20:35:00+09:00",
+      "durationMinutes": 110,
+      "tags": ["dolby", "subtitle"],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "demo-scr-8",
+      "theaterId": "piccadilly",
+      "movieId": "demo-movie-2",
+      "screenName": "SCREEN3",
+      "startAt": "2026-04-18T19:10:00+09:00",
+      "endAt": "2026-04-18T21:05:00+09:00",
+      "durationMinutes": 115,
+      "tags": ["subtitle"],
+      "targetDate": "2026-04-18"
+    }
+  ],
+  "travelTimes": [
+    {
+      "fromTheaterId": "wald9",
+      "toTheaterId": "piccadilly",
+      "travelMinutes": 8
+    },
+    {
+      "fromTheaterId": "wald9",
+      "toTheaterId": "toho-shinjuku",
+      "travelMinutes": 14
+    },
+    {
+      "fromTheaterId": "wald9",
+      "toTheaterId": "ks-cinema",
+      "travelMinutes": 11
+    },
+    {
+      "fromTheaterId": "wald9",
+      "toTheaterId": "109-premium",
+      "travelMinutes": 15
+    },
+    {
+      "fromTheaterId": "piccadilly",
+      "toTheaterId": "toho-shinjuku",
+      "travelMinutes": 11
+    },
+    {
+      "fromTheaterId": "piccadilly",
+      "toTheaterId": "ks-cinema",
+      "travelMinutes": 6
+    },
+    {
+      "fromTheaterId": "piccadilly",
+      "toTheaterId": "109-premium",
+      "travelMinutes": 12
+    },
+    {
+      "fromTheaterId": "toho-shinjuku",
+      "toTheaterId": "ks-cinema",
+      "travelMinutes": 12
+    },
+    {
+      "fromTheaterId": "toho-shinjuku",
+      "toTheaterId": "109-premium",
+      "travelMinutes": 3
+    },
+    {
+      "fromTheaterId": "ks-cinema",
+      "toTheaterId": "109-premium",
+      "travelMinutes": 14
+    }
+  ]
+}
