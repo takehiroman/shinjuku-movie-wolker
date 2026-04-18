@@ -1,7 +1,16 @@
 # Shinjuku Movie Wolker
 
 新宿の映画館を横断して上映スケジュールを時系列表示し、同日に梯子可能な2本の組み合わせを探せる Cloudflare 向けMVPです。  
-MVPでは外部スクレイピングを必須にせず、JSONインポートで D1 に上映データを投入して動かします。
+MVPでは JSON インポートで D1 に上映データを投入して動かせることを基本にしつつ、Cron による自動取得の土台も入れています。
+
+現在の自動取得対象:
+
+- 新宿バルト9
+- 新宿ピカデリー
+
+次段階の対象:
+
+- TOHOシネマズ新宿
 
 ## セットアップ手順
 
@@ -66,6 +75,14 @@ npm run dev:api
 
 デフォルトでは Vite が `/api` を `http://127.0.0.1:8787` にプロキシします。
 
+Cron を含めた Worker 側のローカル確認:
+
+```bash
+npm run dev:api
+```
+
+JST 朝 06:00 実行の Cron は `wrangler.jsonc` では UTC 21:00 として設定しています。
+
 ## デプロイ方法
 
 ビルド:
@@ -81,6 +98,16 @@ wrangler deploy
 ```
 
 この構成では、SPA のビルド成果物 `dist/` を static assets として配信し、 `/api/*` を Worker で処理します。
+
+## 自動更新の仕組み
+
+- `src/jobs/updateScreenings.ts` が Cron から起動されます
+- `src/adapters/wald9Adapter.ts` と `src/adapters/piccadillyAdapter.ts` が当日上映を取得します
+- 正規化結果は `ImportPayload` に変換され、D1 に劇場単位で反映されます
+- 更新後に `screenings` / `itineraries` / `settings` の KV キャッシュを削除します
+
+自動更新は「劇場単位の差分更新」、管理画面の JSON import は「全体置換」です。  
+そのため、手動 import をフォールバックとして残しつつ、自動化を段階導入できます。
 
 ## JSON import のサンプル形式
 
@@ -161,7 +188,7 @@ npm run test
 - `src/services`: キャッシュを含むユースケース
 - `src/api`: Worker API のルーティングとハンドラ
 - `src/pages` / `src/components`: SPA UI
-- `src/jobs` / `src/adapters`: Cron から将来のスクレイピング更新へ拡張する雛形
+- `src/jobs` / `src/adapters`: Cron からの上映自動取得と将来の館追加拡張
 
 ## キャッシュ方針
 
@@ -174,7 +201,9 @@ GET系はまず KV を参照し、ヒットしなければ D1 を読み、結果
 
 ## 今後の拡張ポイント
 
-- 実映画館ごとの adapter 実装と Cron 更新
+- TOHOシネマズ新宿 adapter の追加
+- 取得対象日を「当日 + 翌日」に広げる
+- 週末のみ昼再取得する Cron の追加
 - 3本以上の梯子最適化
 - 作品詳細、タグ整備、並び順プリセット
 - 認証付き管理画面
