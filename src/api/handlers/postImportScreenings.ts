@@ -1,7 +1,7 @@
 import type { AppEnv } from "../../db/client";
 import { parseImportPayload } from "../../lib/validation";
 import { deleteByPrefix } from "../../services/cache";
-import { upsertTheaters } from "../../db/repositories/theatersRepo";
+import { deactivateMissingTheaters, upsertTheaters } from "../../db/repositories/theatersRepo";
 import { upsertMovies } from "../../db/repositories/moviesRepo";
 import { deleteScreeningsByDates, upsertScreenings } from "../../db/repositories/screeningsRepo";
 import { upsertTravelTimes } from "../../db/repositories/travelTimesRepo";
@@ -14,6 +14,11 @@ export async function postImportScreeningsHandler(request: Request, env: AppEnv)
   const targetDates = [...new Set(payload.screenings.map((screening) => screening.targetDate))];
 
   await upsertTheaters(env.DB, payload.theaters, now);
+  await deactivateMissingTheaters(
+    env.DB,
+    payload.theaters.map((theater) => theater.id),
+    now,
+  );
   await upsertMovies(env.DB, payload.movies, now);
   await deleteScreeningsByDates(env.DB, targetDates);
   await upsertScreenings(env.DB, payload.screenings, now);

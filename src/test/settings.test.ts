@@ -26,4 +26,14 @@ describe("settings updates", () => {
 
     expect(next.enabledTheaterIds).toEqual(["wald9"]);
   });
+
+  it("drops theater ids that no longer exist", () => {
+    const next = buildUpdatedSettings(
+      { bufferMinutes: 20, enabledTheaterIds: ["wald9", "missing-theater"] },
+      { bufferMinutes: 20, enabledTheaterIds: ["wald9", "missing-theater"] },
+      theaters,
+    );
+
+    expect(next.enabledTheaterIds).toEqual(["wald9"]);
+  });
 });

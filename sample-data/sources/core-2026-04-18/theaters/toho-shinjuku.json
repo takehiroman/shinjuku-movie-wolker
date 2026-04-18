@@ -1,0 +1,31 @@
+{
+  "theater": { "id": "toho-shinjuku", "name": "TOHOシネマズ新宿", "area": "shinjuku" },
+  "movies": [
+    { "id": "demo-movie-2", "title": "雨上がりのシネマ通り" },
+    { "id": "demo-movie-3", "title": "ミッドナイト・カブキチョウ" }
+  ],
+  "screenings": [
+    {
+      "id": "core-scr-toho-1",
+      "theaterId": "toho-shinjuku",
+      "movieId": "demo-movie-2",
+      "screenName": "SCREEN6",
+      "startAt": "2026-04-18T11:45:00+09:00",
+      "endAt": "2026-04-18T13:35:00+09:00",
+      "durationMinutes": 110,
+      "tags": ["imax"],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "core-scr-toho-2",
+      "theaterId": "toho-shinjuku",
+      "movieId": "demo-movie-3",
+      "screenName": "SCREEN3",
+      "startAt": "2026-04-18T18:45:00+09:00",
+      "endAt": "2026-04-18T20:35:00+09:00",
+      "durationMinutes": 110,
+      "tags": ["dolby", "subtitle"],
+      "targetDate": "2026-04-18"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "travelTimes": [
+    {
+      "fromTheaterId": "wald9",
+      "toTheaterId": "piccadilly",
+      "travelMinutes": 8
+    },
+    {
+      "fromTheaterId": "wald9",
+      "toTheaterId": "toho-shinjuku",
+      "travelMinutes": 14
+    },
+    {
+      "fromTheaterId": "piccadilly",
+      "toTheaterId": "toho-shinjuku",
+      "travelMinutes": 11
+    }
+  ]
+}

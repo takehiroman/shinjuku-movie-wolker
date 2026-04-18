@@ -57,3 +57,27 @@ export async function upsertTheaters(db: D1Database, theaters: Theater[], now: s
     ),
   );
 }
+
+export async function deactivateMissingTheaters(
+  db: D1Database,
+  activeTheaterIds: string[],
+  now: string,
+): Promise<void> {
+  if (!activeTheaterIds.length) {
+    await db
+      .prepare(`UPDATE theaters SET is_active = 0, updated_at = ?`)
+      .bind(now)
+      .run();
+    return;
+  }
+
+  const placeholders = activeTheaterIds.map(() => "?").join(", ");
+  await db
+    .prepare(
+      `UPDATE theaters
+       SET is_active = 0, updated_at = ?
+       WHERE id NOT IN (${placeholders})`,
+    )
+    .bind(now, ...activeTheaterIds)
+    .run();
+}

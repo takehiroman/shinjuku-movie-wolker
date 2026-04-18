@@ -1,0 +1,31 @@
+{
+  "theater": { "id": "wald9", "name": "新宿バルト9", "area": "shinjuku" },
+  "movies": [
+    { "id": "demo-movie-1", "title": "新宿横断メモリーズ" },
+    { "id": "demo-movie-6", "title": "スクリーン越しの東京" }
+  ],
+  "screenings": [
+    {
+      "id": "core-scr-wald9-1",
+      "theaterId": "wald9",
+      "movieId": "demo-movie-1",
+      "screenName": "SCREEN1",
+      "startAt": "2026-04-18T09:05:00+09:00",
+      "endAt": "2026-04-18T11:10:00+09:00",
+      "durationMinutes": 125,
+      "tags": ["subtitle"],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "core-scr-wald9-2",
+      "theaterId": "wald9",
+      "movieId": "demo-movie-6",
+      "screenName": "SCREEN5",
+      "startAt": "2026-04-18T16:30:00+09:00",
+      "endAt": "2026-04-18T18:30:00+09:00",
+      "durationMinutes": 120,
+      "tags": ["late"],
+      "targetDate": "2026-04-18"
+    }
+  ]
+}

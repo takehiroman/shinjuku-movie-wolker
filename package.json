@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "seed:build:core": "node ./sample-data/build-seed.mjs ./sample-data/sources/core-2026-04-18 ./sample-data/shinjuku-core-2026-04-18.json",
     "cf:check": "wrangler check",
     "cf:types": "wrangler types ./src/worker-configuration.d.ts",
     "d1:migrate:local": "wrangler d1 migrations apply shinjuku-movie-wolker --local",

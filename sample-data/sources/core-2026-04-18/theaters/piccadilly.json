@@ -1,0 +1,31 @@
+{
+  "theater": { "id": "piccadilly", "name": "新宿ピカデリー", "area": "shinjuku" },
+  "movies": [
+    { "id": "demo-movie-2", "title": "雨上がりのシネマ通り" },
+    { "id": "demo-movie-3", "title": "ミッドナイト・カブキチョウ" }
+  ],
+  "screenings": [
+    {
+      "id": "core-scr-piccadilly-1",
+      "theaterId": "piccadilly",
+      "movieId": "demo-movie-3",
+      "screenName": "SCREEN2",
+      "startAt": "2026-04-18T12:00:00+09:00",
+      "endAt": "2026-04-18T13:55:00+09:00",
+      "durationMinutes": 115,
+      "tags": ["dolby"],
+      "targetDate": "2026-04-18"
+    },
+    {
+      "id": "core-scr-piccadilly-2",
+      "theaterId": "piccadilly",
+      "movieId": "demo-movie-2",
+      "screenName": "SCREEN3",
+      "startAt": "2026-04-18T19:10:00+09:00",
+      "endAt": "2026-04-18T21:05:00+09:00",
+      "durationMinutes": 115,
+      "tags": ["subtitle"],
+      "targetDate": "2026-04-18"
+    }
+  ]
+}

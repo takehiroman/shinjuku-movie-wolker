@@ -1,10 +1,10 @@
 import type { AppEnv } from "../db/client";
 import type { Settings, SettingsUpdateInput, SettingsView } from "../domain/types";
-import { buildUpdatedSettings } from "../domain/settings";
+import { buildUpdatedSettings, resolveEnabledTheaterIds } from "../domain/settings";
 import { DEFAULT_BUFFER_MINUTES } from "../lib/constants";
 import { settingsCacheKey } from "../cache/keys";
 import { deleteByPrefix, getCachedJson, setSettingsCache } from "./cache";
-import { listTheaters } from "../db/repositories/theatersRepo";
+import { listActiveTheaters } from "../db/repositories/theatersRepo";
 import { getSettingsRow, upsertSettings } from "../db/repositories/settingsRepo";
 import { listTravelTimes, upsertTravelTimes } from "../db/repositories/travelTimesRepo";
 
@@ -15,16 +15,25 @@ export async function getSettings(env: AppEnv): Promise<SettingsView> {
     return cached;
   }
 
-  const theaters = await listTheaters(env.DB);
+  const theaters = await listActiveTheaters(env.DB);
   const stored = await getSettingsRow(env.DB);
-  const travelTimes = await listTravelTimes(env.DB);
+  const activeTheaterIds = new Set(theaters.map((theater) => theater.id));
+  const travelTimes = (await listTravelTimes(env.DB)).filter(
+    (travelTime) =>
+      activeTheaterIds.has(travelTime.fromTheaterId) &&
+      activeTheaterIds.has(travelTime.toTheaterId),
+  );
 
   const settings: Settings =
-    stored ??
-    {
-      bufferMinutes: Number(env.DEFAULT_BUFFER_MINUTES ?? DEFAULT_BUFFER_MINUTES),
-      enabledTheaterIds: theaters.filter((theater) => theater.isActive !== false).map((theater) => theater.id),
-    };
+    stored
+      ? {
+          bufferMinutes: stored.bufferMinutes,
+          enabledTheaterIds: resolveEnabledTheaterIds(stored.enabledTheaterIds, theaters),
+        }
+      : {
+          bufferMinutes: Number(env.DEFAULT_BUFFER_MINUTES ?? DEFAULT_BUFFER_MINUTES),
+          enabledTheaterIds: theaters.filter((theater) => theater.isActive !== false).map((theater) => theater.id),
+        };
 
   const view: SettingsView = {
     ...settings,
@@ -38,7 +47,7 @@ export async function getSettings(env: AppEnv): Promise<SettingsView> {
 
 export async function updateSettings(env: AppEnv, input: SettingsUpdateInput): Promise<SettingsView> {
   const now = new Date().toISOString();
-  const theaters = await listTheaters(env.DB);
+  const theaters = await listActiveTheaters(env.DB);
   const current = await getSettings(env);
   const nextSettings = buildUpdatedSettings(current, input, theaters);
 
@@ -55,12 +64,10 @@ export function resolveEffectiveTheaterIds(
   requestedTheaterIds: string[] | undefined,
   settings: SettingsView,
 ): string[] {
-  if (requestedTheaterIds?.length) {
-    const validTheaters = new Set(settings.theaters.map((theater) => theater.id));
-    return requestedTheaterIds.filter((theaterId) => validTheaters.has(theaterId));
-  }
-
-  return settings.enabledTheaterIds;
+  return resolveEnabledTheaterIds(
+    requestedTheaterIds?.length ? requestedTheaterIds : settings.enabledTheaterIds,
+    settings.theaters,
+  );
 }
 
 export async function invalidateSettingsRelatedCaches(env: AppEnv): Promise<void> {
