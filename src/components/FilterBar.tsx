@@ -40,7 +40,7 @@ export function FilterBar(props: FilterBarProps) {
 
   return (
     <section className="panel">
-      <div className="filter-grid">
+      <div className="filter-row">
         <label className="field">
           <span>日付</span>
           <input type="date" value={date} onChange={(event) => onDateChange(event.target.value)} />
@@ -63,17 +63,17 @@ export function FilterBar(props: FilterBarProps) {
             onChange={(event) => onTagsTextChange(event.target.value)}
           />
         </label>
-        <div className="time-filter-stack">
-          <label className="field">
-            <span>開始時刻以降</span>
-            <input type="time" value={startTime} onChange={(event) => onStartTimeChange(event.target.value)} />
-          </label>
-          <label className="field">
-            <span>終了時刻以前</span>
-            <input type="time" value={endTime} onChange={(event) => onEndTimeChange(event.target.value)} />
-          </label>
-        </div>
         {extraContent}
+      </div>
+      <div className="time-filter-row">
+        <label className="field">
+          <span>開始時刻以降</span>
+          <input type="time" value={startTime} onChange={(event) => onStartTimeChange(event.target.value)} />
+        </label>
+        <label className="field">
+          <span>終了時刻以前</span>
+          <input type="time" value={endTime} onChange={(event) => onEndTimeChange(event.target.value)} />
+        </label>
       </div>
       <div className="field">
         <span>映画館</span>

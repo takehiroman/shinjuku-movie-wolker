@@ -126,6 +126,8 @@ button {
 }
 
 .filter-grid,
+.filter-row,
+.time-filter-row,
 .itinerary-grid,
 .card-row,
 .actions,
@@ -141,16 +143,19 @@ button {
   align-items: end;
 }
 
+.filter-row,
+.time-filter-row {
+  align-items: end;
+}
+
 .field {
   display: grid;
   gap: 0.4rem;
   flex: 1 1 220px;
 }
 
-.time-filter-stack {
-  display: grid;
-  gap: 0.75rem;
-  flex: 1 1 220px;
+.time-filter-row .field {
+  flex: 0 1 220px;
 }
 
 .card {
