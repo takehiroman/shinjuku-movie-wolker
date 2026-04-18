@@ -1,6 +1,10 @@
 import type { Screening, ScreeningFilters } from "./types";
 import { extractTimeString, toTimestamp } from "../lib/date";
 
+function extractDateString(value: string): string {
+  return value.slice(0, 10);
+}
+
 export function normalizeTags(tags: string[] | undefined): string[] {
   return [...new Set((tags ?? []).map((tag) => tag.trim()).filter(Boolean))];
 }
@@ -66,8 +70,18 @@ export function screeningMatchesFilters(screening: Screening, filters: Screening
     return false;
   }
 
-  if (filters.endTime && extractTimeString(screening.endAt) > filters.endTime) {
+  if (filters.startTime && extractDateString(screening.startAt) !== filters.date) {
     return false;
+  }
+
+  if (filters.endTime) {
+    if (extractDateString(screening.endAt) !== filters.date) {
+      return false;
+    }
+
+    if (extractTimeString(screening.endAt) > filters.endTime) {
+      return false;
+    }
   }
 
   return true;
