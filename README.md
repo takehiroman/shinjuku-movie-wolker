@@ -24,6 +24,9 @@ npm install
 cp .dev.vars.example .dev.vars
 ```
 
+Cloudflare Web Analytics を手動スニペットで使う場合は、Vite 用の `.env.local` か `.env.production.local` に `VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN` を設定してください。  
+未設定なら beacon は読み込まれません。
+
 4. `wrangler.jsonc` の `database_id` と `kv_namespaces` を実環境のIDに置き換えます。
 
 ## D1 migration の流し方
@@ -95,6 +98,28 @@ wrangler deploy
 ```
 
 この構成では、SPA のビルド成果物 `dist/` を static assets として配信し、 `/api/*` を Worker で処理します。
+
+## Web Analytics の有効化
+
+Cloudflare Web Analytics は無料枠で利用できます。  
+このリポジトリでは、`VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN` が設定されている場合だけ、Cloudflare の beacon を読み込むようにしています。
+
+1. Cloudflare ダッシュボードの Web Analytics で site を追加します。
+2. 対象ホスト名を登録します。
+   現在の公開先をそのまま計測するなら `shinjuku-movie-wolker.zakimoto.workers.dev` を使います。
+3. 発行された site token を `.env.production.local` などのビルド時環境変数として `VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN` に設定します。
+4. 再ビルド・再デプロイします。
+
+例:
+
+```bash
+echo "VITE_CLOUDFLARE_WEB_ANALYTICS_TOKEN=your-site-token" >> .env.production.local
+npm run build
+wrangler deploy
+```
+
+手動スニペット方式なので、Workers + Assets 構成でも有効化できます。  
+Cloudflare 公式の RUM beacon は SPA の route change も送信対象です。
 
 ## 自動更新の仕組み
 

@@ -1,6 +1,12 @@
 import { RouterProvider } from "react-router-dom";
+import { WebAnalytics } from "../components/WebAnalytics";
 import { router } from "./routes";
 
 export function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <WebAnalytics />
+      <RouterProvider router={router} />
+    </>
+  );
 }
