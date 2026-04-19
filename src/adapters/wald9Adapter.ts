@@ -279,11 +279,20 @@ function parsePdfObjects(pdfData: Uint8Array): Map<number, PdfObject> {
   for (const match of pdfText.matchAll(objectPattern)) {
     const objectId = Number.parseInt(match[1], 10);
     const body = match[2];
-    const streamMatch = body.match(/stream\r?\n([\s\S]*?)\r?\nendstream/);
+    const bodyStart = (match.index ?? 0) + match[0].indexOf(body);
+    const streamStartMatch = body.match(/stream\r?\n/);
+    const streamEndMatch = body.match(/\r?\nendstream/);
+
+    let stream: Uint8Array | null = null;
+    if (streamStartMatch && streamEndMatch && streamEndMatch.index !== undefined) {
+      const streamContentStart = bodyStart + (streamStartMatch.index ?? 0) + streamStartMatch[0].length;
+      const streamContentEnd = bodyStart + streamEndMatch.index;
+      stream = pdfData.slice(streamContentStart, streamContentEnd);
+    }
 
     objects.set(objectId, {
       body,
-      stream: streamMatch ? encodeLatin1(streamMatch[1]) : null,
+      stream,
       usesFlateDecode: body.includes("/FlateDecode"),
     });
   }
@@ -403,10 +412,6 @@ function decodeUtf16Hex(hex: string): string {
 
 function decodeLatin1(bytes: Uint8Array): string {
   return new TextDecoder("latin1").decode(bytes);
-}
-
-function encodeLatin1(value: string): Uint8Array {
-  return Uint8Array.from(value, (char) => char.charCodeAt(0));
 }
 
 async function inflatePdfStream(bytes: Uint8Array): Promise<Uint8Array> {
