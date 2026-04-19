@@ -37,13 +37,22 @@ export function todayDateString(): string {
 }
 
 export function todayDateStringInTimeZone(timeZone: string): string {
+  return dateStringInTimeZoneOffset(timeZone, 0);
+}
+
+export function tomorrowDateStringInTimeZone(timeZone: string): string {
+  return dateStringInTimeZoneOffset(timeZone, 1);
+}
+
+function dateStringInTimeZoneOffset(timeZone: string, offsetDays: number): string {
+  const offsetDate = new Date(Date.now() + offsetDays * 24 * 60 * 60 * 1000);
   const formatter = new Intl.DateTimeFormat("en-CA", {
     timeZone,
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
   });
-  const parts = formatter.formatToParts(new Date());
+  const parts = formatter.formatToParts(offsetDate);
   const partMap = Object.fromEntries(parts.map((part) => [part.type, part.value]));
   return `${partMap.year}-${partMap.month}-${partMap.day}`;
 }

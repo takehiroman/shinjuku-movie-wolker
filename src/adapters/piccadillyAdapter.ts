@@ -1,6 +1,6 @@
 import type { AppEnv } from "../db/client";
 import type { ImportPayload, ImportedCounts } from "../domain/types";
-import { todayDateStringInTimeZone } from "../lib/date";
+import { tomorrowDateStringInTimeZone } from "../lib/date";
 import { persistAdapterImport } from "../services/importScreenings";
 import type { TheaterAdapter } from "./base";
 import {
@@ -24,7 +24,7 @@ const PICCADILLY_SCHEDULE_URL = "https://www.smt-cinema.com/html/site/pc/schedul
 export const piccadillyAdapter: TheaterAdapter<PiccadillyRaw> = {
   name: "piccadilly-html",
   async fetchRaw(): Promise<PiccadillyRaw> {
-    const targetDate = todayDateStringInTimeZone("Asia/Tokyo");
+    const targetDate = tomorrowDateStringInTimeZone("Asia/Tokyo");
     const response = await fetch(PICCADILLY_SCHEDULE_URL.replace("%DATE%", targetDate.replaceAll("-", "")), {
       headers: {
         "user-agent": "ShinjukuMovieWolkerBot/0.1 (+https://github.com/takehiroman/shinjuku-movie-wolker)",

@@ -1,6 +1,6 @@
 import type { AppEnv } from "../db/client";
 import type { ImportPayload, ImportedCounts } from "../domain/types";
-import { todayDateStringInTimeZone } from "../lib/date";
+import { tomorrowDateStringInTimeZone } from "../lib/date";
 import { persistAdapterImport } from "../services/importScreenings";
 import type { TheaterAdapter } from "./base";
 import {
@@ -72,7 +72,7 @@ const TOHO_EVENT_ICON_TAGS: Record<string, string | undefined> = {
 export const tohoShinjukuAdapter: TheaterAdapter<TohoRaw> = {
   name: "toho-shinjuku-api",
   async fetchRaw(): Promise<TohoRaw> {
-    const targetDate = todayDateStringInTimeZone("Asia/Tokyo");
+    const targetDate = tomorrowDateStringInTimeZone("Asia/Tokyo");
     const response = await fetch(
       TOHO_SCHEDULE_URL.replace("%DATE%", targetDate.replaceAll("-", "")).replace("%TIMESTAMP%", `${Date.now()}`),
       {
