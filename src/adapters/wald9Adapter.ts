@@ -1,5 +1,6 @@
 import type { AppEnv } from "../db/client";
 import type { ImportPayload, ImportedCounts } from "../domain/types";
+import { unzlibSync } from "fflate";
 import { tomorrowDateStringInTimeZone } from "../lib/date";
 import { persistAdapterImport } from "../services/importScreenings";
 import type { TheaterAdapter } from "./base";
@@ -415,10 +416,5 @@ function decodeLatin1(bytes: Uint8Array): string {
 }
 
 async function inflatePdfStream(bytes: Uint8Array): Promise<Uint8Array> {
-  const stream = new DecompressionStream("deflate");
-  const writer = stream.writable.getWriter();
-  const normalized = Uint8Array.from(bytes);
-  await writer.write(normalized.buffer);
-  await writer.close();
-  return new Uint8Array(await new Response(stream.readable).arrayBuffer());
+  return unzlibSync(bytes);
 }
