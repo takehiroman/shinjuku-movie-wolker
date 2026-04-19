@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { normalizePiccadillyHtml } from "../adapters/piccadillyAdapter";
 import { normalizeTohoSchedule } from "../adapters/tohoShinjukuAdapter";
-import { normalizeWald9Html } from "../adapters/wald9Adapter";
+import { normalizeWald9Html, normalizeWald9PdfText } from "../adapters/wald9Adapter";
 
 describe("scraping adapters", () => {
   it("normalizes Wald9 schedule cards", () => {
@@ -39,6 +39,35 @@ describe("scraping adapters", () => {
     expect(payload.screenings[0]?.startAt).toBe("2026-04-18T22:15:00+09:00");
     expect(payload.screenings[0]?.endAt).toBe("2026-04-19T00:25:00+09:00");
     expect(payload.screenings[0]?.tags).toEqual(["subtitle", "late"]);
+  });
+
+  it("normalizes Wald9 schedule pdf text", () => {
+    const payload = normalizeWald9PdfText(
+      [
+        "4/20（月）上映スケジュール",
+        "08:00開館",
+        "【DolbyCinema】名探偵コナン ハイウェイの堕天使（116分）",
+        "08:30～10:4011:05～13:15",
+        "シアター６シアター６",
+        "通常レイトショー",
+        "【字幕】ダーティ・エンジェルズ[R15+]（104分）",
+        "10:25～12:20",
+        "シアター４",
+        "通常",
+      ],
+      "2026-04-20",
+    );
+
+    expect(payload.theaters[0].id).toBe("wald9");
+    expect(payload.movies.map((movie) => movie.title)).toEqual([
+      "名探偵コナン ハイウェイの堕天使",
+      "ダーティ・エンジェルズ",
+    ]);
+    expect(payload.screenings).toHaveLength(3);
+    expect(payload.screenings[0]?.tags).toEqual(["dolby-cinema"]);
+    expect(payload.screenings[1]?.tags).toEqual(["dolby-cinema", "late"]);
+    expect(payload.screenings[2]?.tags).toEqual(["subtitle", "r15+"]);
+    expect(payload.screenings[1]?.endAt).toBe("2026-04-20T13:15:00+09:00");
   });
 
   it("normalizes Piccadilly daily schedule fragments", () => {
