@@ -22,6 +22,7 @@ export interface Screening {
   durationMinutes: number;
   tags: string[];
   targetDate: string;
+  bookingUrl?: string | null;
 }
 
 export interface TravelTime {
@@ -82,6 +83,7 @@ export interface ImportPayload {
     durationMinutes: number;
     tags?: string[];
     targetDate: string;
+    bookingUrl?: string | null;
   }>;
   travelTimes?: TravelTime[];
 }

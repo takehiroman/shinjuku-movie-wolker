@@ -219,6 +219,7 @@ export function buildImportPayload(
     durationMinutes: number;
     tags: string[];
     targetDate: string;
+    bookingUrl?: string | null;
   }>,
   travelTimes: TravelTime[] = DEFAULT_TRAVEL_TIMES,
 ): ImportPayload {
@@ -243,6 +244,7 @@ export function buildImportPayload(
       durationMinutes: screening.durationMinutes,
       tags: normalizeTags(screening.tags),
       targetDate: screening.targetDate,
+      bookingUrl: screening.bookingUrl ?? null,
     };
   });
 
