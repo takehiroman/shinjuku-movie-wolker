@@ -167,6 +167,32 @@ wrangler deploy
 
 この構成では、SPA のビルド成果物 `dist/` を static assets として配信し、 `/api/*` を Worker で処理します。
 
+### GitHub からの本番自動デプロイ
+
+`main` ブランチへの push をトリガーに、GitHub Actions で本番デプロイする workflow を `.github/workflows/deploy-production.yml` に追加しています。  
+想定フローは次の通りです。
+
+- `npm ci`
+- `npm run test`
+- `npm run typecheck`
+- `npm run build`
+- `npx wrangler deploy`
+
+GitHub 側では Repository Secrets に以下を設定してください。
+
+- `CLOUDFLARE_API_TOKEN`
+  Cloudflare Workers / D1 / KV をデプロイできる権限を持つ API Token
+- `CLOUDFLARE_ACCOUNT_ID`
+  Cloudflare の account id
+
+最低限、API Token には次の権限を含めるのがおすすめです。
+
+- `Workers Scripts:Edit`
+- `Workers KV Storage:Edit`
+- `D1:Edit`
+
+main に直接 commit した場合も、PR を merge した場合も、最終的に `main` へ push された時点で workflow が動きます。
+
 ## Web Analytics の有効化
 
 Cloudflare Web Analytics は無料枠で利用できます。  
