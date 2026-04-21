@@ -1,25 +1,8 @@
-import type { Itinerary, Screening } from "../domain/types";
+import type { Itinerary } from "../domain/types";
 import { formatTimeLabel } from "../lib/date";
 
 interface ItineraryCardProps {
   itinerary: Itinerary;
-}
-
-function BookingLink({ screening }: { screening: Screening }) {
-  if (!screening.bookingUrl) {
-    return null;
-  }
-
-  return (
-    <a
-      href={screening.bookingUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="booking-link"
-    >
-      予約する ↗
-    </a>
-  );
 }
 
 export function ItineraryCard({ itinerary }: ItineraryCardProps) {
@@ -33,7 +16,6 @@ export function ItineraryCard({ itinerary }: ItineraryCardProps) {
           <p>
             {formatTimeLabel(itinerary.firstScreening.startAt)} - {formatTimeLabel(itinerary.firstScreening.endAt)}
           </p>
-          <BookingLink screening={itinerary.firstScreening} />
         </section>
         <section>
           <p className="card-meta">2本目</p>
@@ -42,7 +24,6 @@ export function ItineraryCard({ itinerary }: ItineraryCardProps) {
           <p>
             {formatTimeLabel(itinerary.secondScreening.startAt)} - {formatTimeLabel(itinerary.secondScreening.endAt)}
           </p>
-          <BookingLink screening={itinerary.secondScreening} />
         </section>
       </div>
       <div className="stats-row">

@@ -26,7 +26,6 @@ export interface ScreeningJoinedRow {
   duration_minutes: number;
   tags: string | null;
   target_date: string;
-  booking_url: string | null;
 }
 
 export interface TravelTimeRow {
