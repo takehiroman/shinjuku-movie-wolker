@@ -18,21 +18,9 @@ export function ScreeningCard({ screening, onSelect }: ScreeningCardProps) {
             {screening.screenName ? ` / ${screening.screenName}` : ""}
           </p>
         </div>
-        <div className="card-actions">
-          {screening.bookingUrl ? (
-            <a
-              href={screening.bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="booking-link"
-            >
-              予約する ↗
-            </a>
-          ) : null}
-          <button type="button" className="secondary-button" onClick={onSelect}>
-            この上映から梯子候補
-          </button>
-        </div>
+        <button type="button" className="secondary-button" onClick={onSelect}>
+          この上映から梯子候補
+        </button>
       </div>
       <div className="tag-row">
         {screening.tags.length ? (

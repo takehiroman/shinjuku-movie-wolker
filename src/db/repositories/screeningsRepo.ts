@@ -16,7 +16,6 @@ function mapRow(row: ScreeningJoinedRow): Screening {
     durationMinutes: row.duration_minutes,
     tags: parseTags(row.tags),
     targetDate: row.target_date,
-    bookingUrl: row.booking_url ?? null,
   };
 }
 
@@ -34,8 +33,7 @@ export async function listScreeningsByDate(db: D1Database, targetDate: string): 
         s.end_at,
         s.duration_minutes,
         s.tags,
-        s.target_date,
-        s.booking_url
+        s.target_date
       FROM screenings s
       INNER JOIN movies m ON m.id = s.movie_id
       INNER JOIN theaters t ON t.id = s.theater_id
@@ -88,7 +86,6 @@ export async function upsertScreenings(
     durationMinutes: number;
     tags?: string[];
     targetDate: string;
-    bookingUrl?: string | null;
   }>,
   now: string,
   sourceType = "json-import",
@@ -104,8 +101,8 @@ export async function upsertScreenings(
           `INSERT OR REPLACE INTO screenings (
             id, theater_id, movie_id, screen_name, start_at, end_at,
             duration_minutes, tags, target_date, source_type, source_ref,
-            booking_url, created_at, updated_at
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, COALESCE((SELECT created_at FROM screenings WHERE id = ?), ?), ?)`,
+            created_at, updated_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, COALESCE((SELECT created_at FROM screenings WHERE id = ?), ?), ?)`,
         )
         .bind(
           screening.id,
@@ -119,7 +116,6 @@ export async function upsertScreenings(
           screening.targetDate,
           sourceType,
           screening.id,
-          screening.bookingUrl ?? null,
           screening.id,
           now,
           now,

@@ -198,11 +198,5 @@ describe("scraping adapters", () => {
     expect(payload.screenings[1]?.tags).toEqual(["dub", "midnight"]);
     expect(payload.screenings[1]?.startAt).toBe("2026-04-18T21:35:00+09:00");
     expect(payload.screenings[1]?.endAt).toBe("2026-04-18T23:35:00+09:00");
-    expect(payload.screenings[0]?.bookingUrl).toBe(
-      "https://hlo.tohotheater.jp/net/ticket/076/TNPI3070J01.do?site_cd=076&jiz_cd=TNPI3050J02&show_cd=1&fnc=1",
-    );
-    expect(payload.screenings[1]?.bookingUrl).toBe(
-      "https://hlo.tohotheater.jp/net/ticket/076/TNPI3070J01.do?site_cd=076&jiz_cd=TNPI3050J02&show_cd=7&fnc=1",
-    );
   });
 });
