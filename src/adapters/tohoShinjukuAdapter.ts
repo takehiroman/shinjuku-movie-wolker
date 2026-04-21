@@ -69,6 +69,21 @@ const TOHO_EVENT_ICON_TAGS: Record<string, string | undefined> = {
   "schedule_ico02-12.gif": "preview",
 };
 
+const TOHO_SHINJUKU_SITE_CD = "076";
+const TOHO_SHINJUKU_JIZ_CD = "TNPI3050J02";
+const TOHO_BOOKING_URL_BASE = "https://hlo.tohotheater.jp/net/ticket/076/TNPI3070J01.do";
+
+function buildTohoBookingUrl(code: number): string {
+  const params = new URLSearchParams({
+    site_cd: TOHO_SHINJUKU_SITE_CD,
+    jiz_cd: TOHO_SHINJUKU_JIZ_CD,
+    show_cd: String(code),
+    fnc: "1",
+  });
+  return `${TOHO_BOOKING_URL_BASE}?${params.toString()}`;
+}
+
+
 export const tohoShinjukuAdapter: TheaterAdapter<TohoRaw> = {
   name: "toho-shinjuku-api",
   async fetchRaw(): Promise<TohoRaw> {
@@ -113,6 +128,7 @@ export function normalizeTohoSchedule(payload: TohoScheduleResponse, targetDate:
     durationMinutes: number;
     tags: string[];
     targetDate: string;
+    bookingUrl: string | null;
   }> = [];
 
   for (const movie of theater.list) {
@@ -143,6 +159,7 @@ export function normalizeTohoSchedule(payload: TohoScheduleResponse, targetDate:
             ...(eventTag ? [eventTag] : []),
           ]),
           targetDate,
+          bookingUrl: buildTohoBookingUrl(item.code),
         });
       }
     }
